@@ -1,0 +1,14 @@
+{
+  "args": {
+    "run": "real",
+    "step": 15000,
+    "size": 256,
+    "n": 2000,
+    "steps": 25,
+    "guidance": 4.0,
+    "bs": null
+  },
+  "fid_xrv": 0.11162966014225899,
+  "fid_inception": 11.09376995812868,
+  "msssim_real_random": 0.33586875597635907
+}

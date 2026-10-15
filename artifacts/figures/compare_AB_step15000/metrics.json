@@ -1,0 +1,94 @@
+{
+  "args": {
+    "runs": [
+      "A",
+      "B"
+    ],
+    "step": 15000,
+    "seeds": 4,
+    "steps": 25,
+    "guidance": 4.0
+  },
+  "prompts": {
+    "normal frontal chest x-ray": {
+      "intra_ssim_A": 0.19419732972625414,
+      "intra_ssim_B": 0.18029382732018137,
+      "cross_ssim_AB": 0.6631540270727748
+    },
+    "chest x-ray with pneumonia": {
+      "intra_ssim_A": 0.17656433980768071,
+      "intra_ssim_B": 0.16721504221972072,
+      "cross_ssim_AB": 0.7305425506867305
+    },
+    "PA chest radiograph with pleural abnormality": {
+      "intra_ssim_A": 0.16464965162411382,
+      "intra_ssim_B": 0.1835148992386356,
+      "cross_ssim_AB": 0.7280332471399082
+    },
+    "chest x-ray with lung lesion": {
+      "intra_ssim_A": 0.18992743740213536,
+      "intra_ssim_B": 0.18577664979449596,
+      "cross_ssim_AB": 0.724681323861561
+    },
+    "frontal chest radiograph showing enlarged cardiomediastinum": {
+      "intra_ssim_A": 0.18205113883539292,
+      "intra_ssim_B": 0.17889259687118744,
+      "cross_ssim_AB": 0.6632672597444019
+    },
+    "chest x-ray with fracture": {
+      "intra_ssim_A": 0.17928473423278937,
+      "intra_ssim_B": 0.15755299269451006,
+      "cross_ssim_AB": 0.7218994689562892
+    },
+    "small left-sided pleural abnormality": {
+      "intra_ssim_A": 0.1746910321608397,
+      "intra_ssim_B": 0.16760482436820842,
+      "cross_ssim_AB": 0.5475071902115889
+    },
+    "large right-sided pleural abnormality": {
+      "intra_ssim_A": 0.16898466664075354,
+      "intra_ssim_B": 0.17256040282540866,
+      "cross_ssim_AB": 0.5491090622292514
+    },
+    "right lower lobe pneumonia": {
+      "intra_ssim_A": 0.17732473659350587,
+      "intra_ssim_B": 0.1435904272633433,
+      "cross_ssim_AB": 0.5356692741095858
+    },
+    "left upper lobe pneumonia": {
+      "intra_ssim_A": 0.1855539094656814,
+      "intra_ssim_B": 0.15247894276560967,
+      "cross_ssim_AB": 0.5642706348711402
+    },
+    "small right upper lobe lung lesion": {
+      "intra_ssim_A": 0.23377763052811454,
+      "intra_ssim_B": 0.17774448842499715,
+      "cross_ssim_AB": 0.5706116874576282
+    },
+    "large left lower lobe lung lesion": {
+      "intra_ssim_A": 0.22205551146361455,
+      "intra_ssim_B": 0.20057767685461939,
+      "cross_ssim_AB": 0.561599486129111
+    },
+    "left-sided rib fracture": {
+      "intra_ssim_A": 0.17565311686940163,
+      "intra_ssim_B": 0.1366482726223455,
+      "cross_ssim_AB": 0.5709289006796546
+    },
+    "markedly enlarged cardiomediastinum": {
+      "intra_ssim_A": 0.14979885781851568,
+      "intra_ssim_B": 0.16576172766530264,
+      "cross_ssim_AB": 0.5837868096117984
+    }
+  },
+  "mean_val": {
+    "intra_ssim_A": 0.18111243860472773,
+    "intra_ssim_B": 0.1755410013564552,
+    "cross_ssim_AB": 0.7052629795769443
+  },
+  "mean_modifier": {
+    "intra_ssim_A": 0.18597993269255336,
+    "intra_ssim_B": 0.16462084534872934,
+    "cross_ssim_AB": 0.5604353806624698
+  }
+}

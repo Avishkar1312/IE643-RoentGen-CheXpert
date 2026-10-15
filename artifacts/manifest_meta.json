@@ -1,0 +1,69 @@
+{
+  "uncertain_policy": "positive",
+  "seed": 643,
+  "combo_cap": 8000,
+  "chexpert_dir": "/home/sedrica/Desktop/IE643/data",
+  "raw_all_views_positives": {
+    "Pleural Other": 6176,
+    "Pneumonia": 24809,
+    "Lung Lesion": 10674,
+    "Fracture": 9682,
+    "Enlarged Cardiomediastinum": 23201,
+    "No Finding": 22381
+  },
+  "n_images": {
+    "train": 152539,
+    "val": 19556,
+    "test": 18932,
+    "chexpert_valid": 202
+  },
+  "n_patients": {
+    "train": 51626,
+    "val": 6454,
+    "test": 6454
+  },
+  "n_diffusion": 48765,
+  "positives": {
+    "train": {
+      "Pleural Other": 3471,
+      "Pneumonia": 16521,
+      "Lung Lesion": 6505,
+      "Fracture": 6361,
+      "Enlarged Cardiomediastinum": 15609,
+      "No Finding": 13587
+    },
+    "val": {
+      "Pleural Other": 412,
+      "Pneumonia": 2079,
+      "Lung Lesion": 836,
+      "Fracture": 800,
+      "Enlarged Cardiomediastinum": 1907,
+      "No Finding": 1683
+    },
+    "test": {
+      "Pleural Other": 434,
+      "Pneumonia": 2056,
+      "Lung Lesion": 807,
+      "Fracture": 774,
+      "Enlarged Cardiomediastinum": 1957,
+      "No Finding": 1704
+    },
+    "chexpert_valid": {
+      "Pleural Other": 1,
+      "Pneumonia": 8,
+      "Lung Lesion": 1,
+      "Fracture": 0,
+      "Enlarged Cardiomediastinum": 105,
+      "No Finding": 26
+    }
+  },
+  "positives_diffusion": {
+    "Pleural Other": 3471,
+    "Pneumonia": 11021,
+    "Lung Lesion": 6505,
+    "Fracture": 6361,
+    "Enlarged Cardiomediastinum": 11280,
+    "No Finding": 8000
+  },
+  "no_target_not_normal": 120841
+}

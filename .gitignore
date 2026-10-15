@@ -1,0 +1,27 @@
+# Data, environments, caches (re-creatable, very large)
+data/
+.cache/
+.venv/
+__pycache__/
+*.pyc
+src.zip
+.claude/
+claude.md
+
+# artifacts/: keep only small, shareable outputs
+artifacts/*
+!artifacts/manifest_meta.json
+!artifacts/logs/
+artifacts/logs/*
+!artifacts/logs/queue_*.sh
+!artifacts/figures/
+artifacts/figures/compare_*/images/
+!artifacts/runs/
+artifacts/runs/*/*
+!artifacts/runs/*/args*.json
+!artifacts/runs/*/log.jsonl
+artifacts/runs/A_smoke/
+!artifacts/cls/
+artifacts/cls/*/*
+!artifacts/cls/*/result.json
+!artifacts/cls/*/log.jsonl

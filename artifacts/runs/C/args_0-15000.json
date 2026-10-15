@@ -1,0 +1,26 @@
+{
+  "run": "C",
+  "steps": 15000,
+  "bs": 4,
+  "accum": 8,
+  "lr": 5e-05,
+  "warmup": 500,
+  "p_drop": 0.1,
+  "ckpt_every": 500,
+  "sample_every": 1000,
+  "log_every": 10,
+  "keep": 2,
+  "milestone_every": 2500,
+  "resume_from": null,
+  "out": null,
+  "seed": 643,
+  "no_sample": false,
+  "no_grad_ckpt": false,
+  "smoke": false,
+  "cfg": {
+    "size": 256,
+    "unet": "full",
+    "te": "frozen",
+    "lr": 5e-05
+  }
+}

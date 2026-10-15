@@ -1,0 +1,26 @@
+{
+  "args": {
+    "run": "C",
+    "step": 20000,
+    "size": 256,
+    "n": 2000,
+    "steps": 25,
+    "guidance": 5.5,
+    "bs": 4
+  },
+  "fid_xrv": 0.9149389007496982,
+  "fid_inception": 32.352172264480345,
+  "msssim_real_random": 0.33586875597635907,
+  "msssim": {
+    "mean": 0.180700513223807,
+    "sd": 0.05474821836347978,
+    "per_prompt": {
+      "normal frontal chest x-ray": 0.20046105980873108,
+      "chest x-ray with pneumonia": 0.1746646910905838,
+      "PA chest radiograph with pleural abnormality": 0.2745833098888397,
+      "chest x-ray with lung lesion": 0.1691211462020874,
+      "frontal chest radiograph showing enlarged cardiomediastinum": 0.17739957571029663,
+      "chest x-ray with fracture": 0.08797329664230347
+    }
+  }
+}

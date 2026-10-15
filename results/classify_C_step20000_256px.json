@@ -1,0 +1,40 @@
+{
+  "args": {
+    "tag": "C_step20000",
+    "n": 2000,
+    "size": 256,
+    "device": "cuda"
+  },
+  "positives": {
+    "Pleural Other": 42,
+    "Pneumonia": 227,
+    "Lung Lesion": 91,
+    "Fracture": 79,
+    "Enlarged Cardiomediastinum": 216
+  },
+  "own": {
+    "model": "artifacts/cls/real_f1.0_s0/best.pt",
+    "auroc": {
+      "Pleural Other": 0.9222664040079771,
+      "Pneumonia": 0.835308630932415,
+      "Lung Lesion": 0.9150265658908927,
+      "Fracture": 0.9287126298934495,
+      "Enlarged Cardiomediastinum": 0.733534192825112
+    },
+    "macro_auroc": 0.8669696847099692
+  },
+  "xrv": {
+    "model": "densenet121-res224-all",
+    "auroc": {
+      "Pleural Other": 0.6136971642589619,
+      "Pneumonia": 0.7199351009141032,
+      "Lung Lesion": 0.5235466471715816,
+      "Fracture": 0.4365935463465099,
+      "Enlarged Cardiomediastinum": 0.5035267189835576
+    },
+    "proxy_labels": [
+      "Pleural Other"
+    ],
+    "macro_auroc": 0.545900503353938
+  }
+}

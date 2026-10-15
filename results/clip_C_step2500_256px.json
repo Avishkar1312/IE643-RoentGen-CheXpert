@@ -1,0 +1,73 @@
+{
+  "args": {
+    "tag": "C_step2500",
+    "n": 2000,
+    "size": 256,
+    "device": "cpu"
+  },
+  "model": "hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224",
+  "class_counts": {
+    "Pleural Other": 29,
+    "Pneumonia": 187,
+    "Lung Lesion": 62,
+    "Fracture": 62,
+    "Enlarged Cardiomediastinum": 179,
+    "normal": 165
+  },
+  "alignment": {
+    "clip_own": 0.39216238260269165,
+    "clip_mismatched": 0.37014544010162354,
+    "margin": 0.02201695740222931,
+    "frac_own_gt_mismatched": 0.6593567251461988,
+    "clip_own_all_rows": 0.39900946617126465,
+    "zeroshot_acc": 0.37719298245614036,
+    "zeroshot_chance": 0.16666666666666666,
+    "zeroshot_per_class_acc": {
+      "Pleural Other": 0.06896551724137931,
+      "Pneumonia": 0.10695187165775401,
+      "Lung Lesion": 0.04838709677419355,
+      "Fracture": 0.43548387096774194,
+      "Enlarged Cardiomediastinum": 0.46368715083798884,
+      "normal": 0.7454545454545455
+    },
+    "zeroshot_text": {
+      "Pleural Other": "chest x-ray with pleural abnormality",
+      "Pneumonia": "chest x-ray with pneumonia",
+      "Lung Lesion": "chest x-ray with lung lesion",
+      "Fracture": "chest x-ray with fracture",
+      "Enlarged Cardiomediastinum": "chest x-ray with enlarged cardiomediastinum",
+      "normal": "normal frontal chest x-ray"
+    }
+  },
+  "image_image": {
+    "n_query": 194,
+    "n_cand": 396,
+    "chance": 0.16666666666666669,
+    "P@5": 0.20927835051546392,
+    "P@10": 0.21649484536082475,
+    "P@50": 0.2036082474226804,
+    "per_class_P@10": {
+      "Pleural Other": 0.18620689655172415,
+      "Pneumonia": 0.1393939393939394,
+      "Lung Lesion": 0.13333333333333333,
+      "Fracture": 0.15757575757575756,
+      "Enlarged Cardiomediastinum": 0.2727272727272727,
+      "normal": 0.40606060606060607
+    }
+  },
+  "image_text": {
+    "bank_size": 34,
+    "chance": 0.16228070175438597,
+    "P@1": 0.3406432748538012,
+    "P@5": 0.30146198830409354,
+    "P@10": 0.2507309941520468,
+    "per_class_P@10": {
+      "Pleural Other": 0.10689655172413794,
+      "Pneumonia": 0.17593582887700535,
+      "Lung Lesion": 0.1532258064516129,
+      "Fracture": 0.38870967741935486,
+      "Enlarged Cardiomediastinum": 0.26256983240223464,
+      "normal": 0.3327272727272727
+    }
+  }
+}

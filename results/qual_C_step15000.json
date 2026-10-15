@@ -1,0 +1,239 @@
+{
+  "args": {
+    "run": "C",
+    "step": 15000,
+    "guidance": 4.0,
+    "seeds": 16,
+    "show": 6,
+    "steps": 25,
+    "bs": 4
+  },
+  "thresholds_5pct_fpr": {
+    "Pleural Other": 0.1677633374929428,
+    "Pneumonia": 0.3048688769340515,
+    "Lung Lesion": 0.20946967601776123,
+    "Fracture": 0.2523840367794037,
+    "Enlarged Cardiomediastinum": 0.16559311747550964
+  },
+  "real_called_rate": {
+    "Pleural Other": 0.2857142857142857,
+    "Pneumonia": 0.20704845814977973,
+    "Lung Lesion": 0.31868131868131866,
+    "Fracture": 0.3291139240506329,
+    "Enlarged Cardiomediastinum": 0.1574074074074074
+  },
+  "fig2": {
+    "normal frontal chest x-ray": {
+      "any_called_rate": 0.0375,
+      "mean_max_p": 0.1352701187133789
+    },
+    "chest x-ray with pneumonia": {
+      "target": "Pneumonia",
+      "mean_p": 0.18985411524772644,
+      "called_rate": 0.125,
+      "real_called_rate": 0.20704845814977973
+    },
+    "PA chest radiograph with pleural abnormality": {
+      "target": "Pleural Other",
+      "mean_p": 0.16794222593307495,
+      "called_rate": 0.375,
+      "real_called_rate": 0.2857142857142857
+    },
+    "chest x-ray with lung lesion": {
+      "target": "Lung Lesion",
+      "mean_p": 0.2962339222431183,
+      "called_rate": 0.5,
+      "real_called_rate": 0.31868131868131866
+    },
+    "frontal chest radiograph showing enlarged cardiomediastinum": {
+      "target": "Enlarged Cardiomediastinum",
+      "mean_p": 0.09864680469036102,
+      "called_rate": 0.125,
+      "real_called_rate": 0.1574074074074074
+    },
+    "chest x-ray with fracture": {
+      "target": "Fracture",
+      "mean_p": 0.2945728302001953,
+      "called_rate": 0.4375,
+      "real_called_rate": 0.3291139240506329
+    }
+  },
+  "fig3_modifiers": {
+    "small left-sided pleural abnormality": {
+      "target": "Pleural Other",
+      "mean_p": 0.2507458031177521,
+      "called_rate": 0.5
+    },
+    "large right-sided pleural abnormality": {
+      "target": "Pleural Other",
+      "mean_p": 0.24081093072891235,
+      "called_rate": 0.5
+    },
+    "right lower lobe pneumonia": {
+      "target": "Pneumonia",
+      "mean_p": 0.2544514536857605,
+      "called_rate": 0.3125
+    },
+    "left upper lobe pneumonia": {
+      "target": "Pneumonia",
+      "mean_p": 0.20794150233268738,
+      "called_rate": 0.125
+    },
+    "small right upper lobe lung lesion": {
+      "target": "Lung Lesion",
+      "mean_p": 0.271648108959198,
+      "called_rate": 0.375
+    },
+    "large left lower lobe lung lesion": {
+      "target": "Lung Lesion",
+      "mean_p": 0.26363158226013184,
+      "called_rate": 0.3125
+    },
+    "left-sided rib fracture": {
+      "target": "Fracture",
+      "mean_p": 0.3092511296272278,
+      "called_rate": 0.5
+    },
+    "markedly enlarged cardiomediastinum": {
+      "target": "Enlarged Cardiomediastinum",
+      "mean_p": 0.10857327282428741,
+      "called_rate": 0.1875
+    }
+  },
+  "fig3_laterality": {
+    "Pleural Other": {
+      "S_mean": -0.23289871215820312,
+      "S_se": 0.30692267417907715,
+      "frac_correct_side": 0.4375,
+      "n": 16
+    },
+    "Pneumonia": {
+      "S_mean": 0.706817626953125,
+      "S_se": 0.6850712299346924,
+      "frac_correct_side": 0.5,
+      "n": 16
+    },
+    "Lung Lesion": {
+      "S_mean": 0.3222522735595703,
+      "S_se": 0.3566563129425049,
+      "frac_correct_side": 0.5,
+      "n": 16
+    },
+    "Fracture": {
+      "S_mean": 0.8898601531982422,
+      "S_se": 0.7967111468315125,
+      "frac_correct_side": 0.4375,
+      "n": 16
+    }
+  },
+  "fig4": {
+    "A=Pneumonia | B=Pleural Other": {
+      "A only": {
+        "mean_pA": 0.18982148170471191,
+        "mean_pB": 0.04645995795726776,
+        "called_A": 0.125,
+        "called_B": 0.0,
+        "called_both": 0.0
+      },
+      "B only": {
+        "mean_pA": 0.10669748485088348,
+        "mean_pB": 0.18504294753074646,
+        "called_A": 0.0,
+        "called_B": 0.375,
+        "called_both": 0.0
+      },
+      "A + B": {
+        "mean_pA": 0.19039732217788696,
+        "mean_pB": 0.21286258101463318,
+        "called_A": 0.0625,
+        "called_B": 0.5,
+        "called_both": 0.0625
+      },
+      "normal": {
+        "mean_pA": 0.04893673211336136,
+        "mean_pB": 0.038276784121990204
+      }
+    },
+    "A=Enlarged Cardiomediastinum | B=Pleural Other": {
+      "A only": {
+        "mean_pA": 0.10154743492603302,
+        "mean_pB": 0.03757121041417122,
+        "called_A": 0.1875,
+        "called_B": 0.0,
+        "called_both": 0.0
+      },
+      "B only": {
+        "mean_pA": 0.09379716217517853,
+        "mean_pB": 0.18504294753074646,
+        "called_A": 0.0625,
+        "called_B": 0.375,
+        "called_both": 0.0
+      },
+      "A + B": {
+        "mean_pA": 0.10794343054294586,
+        "mean_pB": 0.13387200236320496,
+        "called_A": 0.0625,
+        "called_B": 0.25,
+        "called_both": 0.0
+      },
+      "normal": {
+        "mean_pA": 0.06323835253715515,
+        "mean_pB": 0.038276784121990204
+      }
+    },
+    "A=Pneumonia | B=Enlarged Cardiomediastinum": {
+      "A only": {
+        "mean_pA": 0.18982148170471191,
+        "mean_pB": 0.058297138661146164,
+        "called_A": 0.125,
+        "called_B": 0.0,
+        "called_both": 0.0
+      },
+      "B only": {
+        "mean_pA": 0.056204650551080704,
+        "mean_pB": 0.10154743492603302,
+        "called_A": 0.0,
+        "called_B": 0.1875,
+        "called_both": 0.0
+      },
+      "A + B": {
+        "mean_pA": 0.12742377817630768,
+        "mean_pB": 0.07953134924173355,
+        "called_A": 0.0625,
+        "called_B": 0.125,
+        "called_both": 0.0
+      },
+      "normal": {
+        "mean_pA": 0.04893673211336136,
+        "mean_pB": 0.06323835253715515
+      }
+    },
+    "A=Lung Lesion | B=Fracture": {
+      "A only": {
+        "mean_pA": 0.296191543340683,
+        "mean_pB": 0.09117171168327332,
+        "called_A": 0.5,
+        "called_B": 0.0,
+        "called_both": 0.0
+      },
+      "B only": {
+        "mean_pA": 0.0321037620306015,
+        "mean_pB": 0.29460787773132324,
+        "called_A": 0.0,
+        "called_B": 0.4375,
+        "called_both": 0.0
+      },
+      "A + B": {
+        "mean_pA": 0.19366882741451263,
+        "mean_pB": 0.18754291534423828,
+        "called_A": 0.25,
+        "called_B": 0.3125,
+        "called_both": 0.0
+      },
+      "normal": {
+        "mean_pA": 0.06254301965236664,
+        "mean_pB": 0.11672048270702362
+      }
+    }
+  }
+}

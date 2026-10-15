@@ -1,0 +1,26 @@
+{
+  "run": "A",
+  "steps": 15000,
+  "bs": 4,
+  "accum": 8,
+  "lr": 0.0001,
+  "warmup": 500,
+  "p_drop": 0.1,
+  "ckpt_every": 500,
+  "sample_every": 1000,
+  "log_every": 10,
+  "keep": 2,
+  "milestone_every": 1000,
+  "resume_from": null,
+  "out": null,
+  "seed": 643,
+  "no_sample": false,
+  "no_grad_ckpt": true,
+  "smoke": false,
+  "cfg": {
+    "size": 512,
+    "unet": "lora",
+    "te": "lora",
+    "lr": 0.0001
+  }
+}
