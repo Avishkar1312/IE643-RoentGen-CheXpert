@@ -1,0 +1,79 @@
+{
+  "cells": {
+    "real_f0.01": {
+      "n_seeds": 3,
+      "n_train": 1525,
+      "macro_mean": 0.5938400308661923,
+      "macro_std": 0.0028121175254597146,
+      "per_target": {
+        "Pleural Other": 0.6540776027765031,
+        "Pneumonia": 0.5966178609889362,
+        "Lung Lesion": 0.5974571807033286,
+        "Fracture": 0.596185931434089,
+        "Enlarged Cardiomediastinum": 0.5248615784281041
+      }
+    },
+    "synth_f0.01": {
+      "n_seeds": 2,
+      "n_train": 1525,
+      "macro_mean": 0.6246281578955692,
+      "macro_std": 0.00902152869427658,
+      "per_target": {
+        "Pleural Other": 0.6592222823441368,
+        "Pneumonia": 0.6545261145498915,
+        "Lung Lesion": 0.6406358330128616,
+        "Fracture": 0.6188370605933049,
+        "Enlarged Cardiomediastinum": 0.5499194989776512
+      },
+      "delta_vs_real": 0.030788127029376944
+    },
+    "mixed_f0.01": {
+      "n_seeds": 2,
+      "n_train": 3050,
+      "macro_mean": 0.623663158177571,
+      "macro_std": 0.007788939021205477,
+      "per_target": {
+        "Pleural Other": 0.6984319328581043,
+        "Pneumonia": 0.6248904085695339,
+        "Lung Lesion": 0.6272312780412768,
+        "Fracture": 0.6177118705090232,
+        "Enlarged Cardiomediastinum": 0.5500503009099167
+      },
+      "delta_vs_real": 0.029823127311378705
+    },
+    "real_f1.0": {
+      "n_seeds": 1,
+      "n_train": 152539,
+      "macro_mean": 0.7493707668508519,
+      "macro_std": 0.0,
+      "per_target": {
+        "Pleural Other": 0.8138703374583278,
+        "Pneumonia": 0.7363569548955393,
+        "Lung Lesion": 0.7844717685766781,
+        "Fracture": 0.7692294638534619,
+        "Enlarged Cardiomediastinum": 0.6429253094702526
+      }
+    }
+  },
+  "missing": [
+    "synth_f0.01_s2",
+    "mixed_f0.01_s2",
+    "real_f0.1_s0",
+    "real_f0.1_s1",
+    "real_f0.1_s2",
+    "synth_f0.1_s0",
+    "synth_f0.1_s1",
+    "synth_f0.1_s2",
+    "mixed_f0.1_s0",
+    "mixed_f0.1_s1",
+    "mixed_f0.1_s2",
+    "real_f1.0_s1",
+    "real_f1.0_s2",
+    "synth_f1.0_s0",
+    "synth_f1.0_s1",
+    "synth_f1.0_s2",
+    "mixed_f1.0_s0",
+    "mixed_f1.0_s1",
+    "mixed_f1.0_s2"
+  ]
+}

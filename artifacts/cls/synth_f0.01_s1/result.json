@@ -1,0 +1,28 @@
+{
+  "args": {
+    "cache": "False",
+    "data": "synth",
+    "synth": "/home/sedrica/Desktop/IE643/artifacts/synth/C_step22500_g4.0_dpm25",
+    "frac": "0.01",
+    "seed": "1",
+    "epochs": "30",
+    "patience": "5",
+    "bs": "64",
+    "lr": "0.0001",
+    "wd": "0.05",
+    "min_steps": "200",
+    "device": "cuda",
+    "val_n": "None",
+    "out": "None"
+  },
+  "n_train": 1525,
+  "best_val_macro": 0.6381322913381866,
+  "test": {
+    "Pleural Other": 0.658772925009205,
+    "Pneumonia": 0.6635703472940183,
+    "Lung Lesion": 0.6538858095116011,
+    "Fracture": 0.6335459303108261,
+    "Enlarged Cardiomediastinum": 0.5452616979341557
+  },
+  "test_macro": 0.6310073420119613
+}
