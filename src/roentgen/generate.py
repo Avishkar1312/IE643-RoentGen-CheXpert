@@ -112,7 +112,9 @@ def main():
                 ims = pipe(chunk.prompt.tolist(), height=size, width=size, num_inference_steps=a.steps,
                            guidance_scale=a.guidance, generator=gens, output_type="np").images
             for i, im in zip(chunk.train_idx, ims):
-                Image.fromarray((im.mean(-1) * 255).round().astype(np.uint8)).save(out / "png" / f"{i:06d}.png")
+                dst = out / "png" / f"{i:06d}.png"       # write-then-rename: a crash never leaves a partial PNG
+                Image.fromarray((im.mean(-1) * 255).round().astype(np.uint8)).save(dst.with_suffix(".tmp"), format="PNG")
+                dst.with_suffix(".tmp").replace(dst)
             n = min(b + a.bs, len(todo))
             since_flush += len(chunk)
             if since_flush >= a.flush or n == len(todo):

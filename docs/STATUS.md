@@ -146,13 +146,24 @@ features are on a real-image manifold.
 - [x] 4d qualitative figures (above)
 - [x] Training improvements: extended C to 25k (best at 22.5k). LoRA rank/TE lr not pursued, since C is primary
 - [x] Choose the primary run: **C @ 22.5k, g=4**
-- [~] Stage 3 generation (generate.py) with C ckpt-22500, guidance 4.0, launched 2026-10-14 10:56
+- [x] Stage 3 generation (generate.py) with C ckpt-22500, guidance 4.0, launched 2026-10-14 10:56, done 2026-10-23
   (artifacts/logs/queue_generate.sh -> generate.log; check with ./jobstatus.sh; re-run the queue to resume)
   - [x] PNDM-75 sampler check: 2000 rows -> artifacts/synth/C_step22500_g4.0_pndm75 (~30 min)
-  - [ ] DPM++-25 twin corpus: all 152,539 train rows -> artifacts/synth/C_step22500_g4.0_dpm25 (~14 h @ ~3 img/s)
+  - [x] DPM++-25 twin corpus: all 152,539 train rows -> artifacts/synth/C_step22500_g4.0_dpm25 (~14 h @ ~3 img/s)
         Priority order: union of Stage 5 1% subsets (4,536 rows) -> 10% subsets -> rest, so small-data runs can start early
-  - [ ] FID of PNDM-75 vs DPM-25 on the paired 2k (same prompts and seeds)
-  - [ ] filtering.py (degenerate images + judge-score rejection rate per pathology)
+  - [x] FID of PNDM-75 vs DPM-25 on the paired 2k (compare_samplers.py -> results/sampler_check_256px.json)
+        | sampler | FID_XRV vs test | FID_Inc vs test | FID_XRV vs same rows | own macro AUROC |
+        | PNDM-75 | 0.638 | 33.95 | 0.488 | 0.858 |
+        | DPM++-25 | 0.645 | 29.10 | 0.515 | 0.888 |
+        Same FID_XRV, better Inception FID and AUROC for DPM, so we keep the DPM corpus. Paired MS-SSIM 0.93: same seed gives nearly the same image.
+  - [x] filtering.py (degenerate images + judge-score rejection rate per pathology) -> results/filtering_C_step22500_g4.0_dpm25.json
+        0 degenerate, 2,590 label misses (judge recall 0.9 thresholds) -> 149,949 kept (98.3%). Miss rate on positives:
+        Pneumonia 9.7%, Enl. Cardiomed. 5.5%, Lung Lesion 2.3%, Pleural Other 0.7%, Fracture 0.1%.
+        Spurious-positive rate on negatives is highest for Fracture (17.5%). Stage 5 trains on the unfiltered twins (1:1 pairing).
   - [ ] Per-pathology balanced extra pool (deferred until the twin set is done)
 - [x] train_classifier --data real|synth|mixed (2026-10-14): same seeded --frac draw; synth = twins of those rows,
       mixed = rows + twins; out dir artifacts/cls/<data>_f<frac>_s<seed>. Smoke-tested mixed 1% end-to-end.
+
+## Stage 5: real / synth / mixed classifiers (artifacts/logs/queue_stage5.sh -> stage5.log)
+- [ ] Grid 3 data x {1%, 10%, 100%} x seeds 0-2, relaunched 2026-10-23 19:20 (first launch deadlocked on an unanchored pgrep)
+- [ ] Table: `python -m roentgen.stage5_table` -> results/stage5.json (test macro AUROC, mean ± std over seeds)

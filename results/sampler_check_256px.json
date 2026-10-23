@@ -1,0 +1,59 @@
+{
+  "args": {
+    "size": 256,
+    "n_ref": 2000
+  },
+  "n": 2000,
+  "positives": {
+    "Pleural Other": 74,
+    "Pneumonia": 203,
+    "Lung Lesion": 108,
+    "Fracture": 79,
+    "Enlarged Cardiomediastinum": 178
+  },
+  "pndm75": {
+    "fid_xrv_vs_test": 0.6377936669012134,
+    "fid_inception_vs_test": 33.95486983116416,
+    "fid_xrv_vs_rows": 0.48806483807524825,
+    "fid_inception_vs_rows": 36.20145441500484,
+    "own_auroc": {
+      "Pleural Other": 0.9320921388678398,
+      "Pneumonia": 0.8621717641060224,
+      "Lung Lesion": 0.9023006225041108,
+      "Fracture": 0.9136921039279385,
+      "Enlarged Cardiomediastinum": 0.6798939922791353
+    },
+    "own_macro_auroc": 0.8580301243370094
+  },
+  "dpm25": {
+    "fid_xrv_vs_test": 0.6446666742116919,
+    "fid_inception_vs_test": 29.097650008617173,
+    "fid_xrv_vs_rows": 0.5146002423595465,
+    "fid_inception_vs_rows": 32.17711514542319,
+    "own_auroc": {
+      "Pleural Other": 0.9375719177121045,
+      "Pneumonia": 0.9062901771151152,
+      "Lung Lesion": 0.9272570667919504,
+      "Fracture": 0.9585955363438083,
+      "Enlarged Cardiomediastinum": 0.7122066133030748
+    },
+    "own_macro_auroc": 0.8883842622532108
+  },
+  "real_rows": {
+    "own_auroc": {
+      "Pleural Other": 0.828716567034324,
+      "Pneumonia": 0.7657535410687215,
+      "Lung Lesion": 0.8333064168819984,
+      "Fracture": 0.8099453739152208,
+      "Enlarged Cardiomediastinum": 0.6579894300620384
+    },
+    "own_macro_auroc": 0.7791422657924606,
+    "note": "judge was trained on these real rows, so this is optimistic"
+  },
+  "between": {
+    "fid_xrv": 0.4456343002335764,
+    "fid_inception": 21.93847284670459,
+    "paired_msssim_mean": 0.9311666488647461,
+    "paired_msssim_sd": 0.08306121826171875
+  }
+}
