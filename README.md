@@ -142,7 +142,7 @@ real test split. The table gives test macro-AUROC, mean ± std over 3 seeds (`re
 - At 10%, Synth only ties Real, but adding the twins to the real data (Mixed) still helps (+0.017, non-overlapping CIs).
   The gain shrinks as real data grows, as the paper reports.
 - Scope: twins were generated for the rows of the 1% and 10% subsets (44,603 images), so the 100% Synth/Mixed cells were not run.
-- Secondary test set, the official CheXpert valid split (`results/chexpert_valid.json`): VALID_SENTENCE
+- Secondary test set, the official CheXpert valid split (`results/chexpert_valid.json`): macro AUROC over Pneumonia + Enlarged CM only (the other labels have ≤1 positive among the 202 frontal images). 1%: Synth 0.714 ± 0.036, Mixed 0.643 ± 0.046, Real pending (checkpoints being retrained); 10%: Real 0.634 ± 0.096, Synth 0.681 ± 0.020, Mixed 0.620 ± 0.070; 100% Real 0.628. With 8 Pneumonia positives the seed spread is large, so this set cannot separate the arms; the 18,932-image test split is the primary result.
 - Filtering (`results/filtering_C_step15000_g4.0_dpm25.json`): no degenerate images; the judge rejects 2.1% of twins as
   missing their positive label (miss rate 9% for Pneumonia and Enlarged Cardiomediastinum, ≤2% for the rest). The grid uses the unfiltered corpus.
 

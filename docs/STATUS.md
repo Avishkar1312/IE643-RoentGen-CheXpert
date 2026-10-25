@@ -192,13 +192,13 @@ features are on a real-image manifold.
   Filtering on the 15k corpus: 0 degenerate, 915 / 44,603 (2.1%) label misses; grid uses the unfiltered twins.
 - [x] 95% CIs over seeds (t-interval, n=3), from `aggregate.py`: 1% Real 0.594 ± 0.007, Synth 0.625 ± 0.011, Mixed 0.625 ± 0.028;
       10% Real 0.684 ± 0.007, Synth 0.684 ± 0.009, Mixed 0.701 ± 0.009. Figure: docs/img/stage5_auroc_vs_size.png.
-- [x] Official CheXpert valid set (`eval_valid.py` -> results/chexpert_valid.json; 2026-10-25). VALID_STATUS
+- [x] Official CheXpert valid set (`eval_valid.py` -> results/chexpert_valid.json; 2026-10-25). Results for 10%/100% and Synth/Mixed 1% are in; Real 1% checkpoints were lost in the deletion and are being retrained into artifacts/cls_rerun/ (seed 0 reproduces test AUROC 0.5906 exactly).
 - Not run: Synth/Mixed at 100% (twins exist only for the 1% + 10% subsets, 44,603 rows) and Real 100% seeds 1–2.
 
 ## Stage 6: reporting and demo (2026-10-25)
 - [x] `aggregate.py` -> results/tables.md (fidelity/diversity, classification of synthetic images with per-label AUROC + BiomedCLIP,
       downstream with 95% CIs and CheXpert-valid) + docs/img/stage5_auroc_vs_size.png.
 - [x] `app/gradio_demo.py`: checkboxes or a free-text prompt, plus guidance/steps/seed -> C@15k image + judge probabilities with 5%-FPR calls
-      (thresholds recalibrated against the current judge at start-up). Smoke-tested headless: DEMO_STATUS
+      (thresholds recalibrated against the current judge at start-up). Smoke-tested headless: pending (the first attempt hit CUDA OOM on the shared GPU while the classifier retrain was running).
 - [x] `notebooks/kaggle_reproduce.ipynb`: clone, Stage 1, 64-image latent cache + 20-step run-C smoke, sampling from released weights
       (if attached as a Kaggle dataset), `aggregate`. Not executed on Kaggle itself; set REPO_URL to the new remote first.
