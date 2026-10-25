@@ -2,7 +2,7 @@
   "args": {
     "cache": "False",
     "data": "mixed",
-    "synth": "/home/sedrica/Desktop/IE643/artifacts/synth/C_step22500_g4.0_dpm25",
+    "synth": "artifacts/synth/C_step15000_g4.0_dpm25",
     "frac": "0.01",
     "seed": "1",
     "epochs": "30",
@@ -16,13 +16,13 @@
     "out": "None"
   },
   "n_train": 3050,
-  "best_val_macro": 0.6409244665951939,
+  "best_val_macro": 0.6287639117529269,
   "test": {
-    "Pleural Other": 0.7019713303169404,
-    "Pneumonia": 0.6264829932545286,
-    "Lung Lesion": 0.6354181942486006,
-    "Fracture": 0.6309036769692846,
-    "Enlarged Cardiomediastinum": 0.5510776540992156
+    "Pleural Other": 0.6633102196127318,
+    "Pneumonia": 0.6284998934779942,
+    "Lung Lesion": 0.6285830363628595,
+    "Fracture": 0.6221329043113663,
+    "Enlarged Cardiomediastinum": 0.5207043632502336
   },
-  "test_macro": 0.6291707697777139
+  "test_macro": 0.6126460834030371
 }

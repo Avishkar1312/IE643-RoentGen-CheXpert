@@ -29,7 +29,8 @@ images help a downstream classifier.
 | **Fidelity** | FID<sub>XRV</sub> **0.67** (untrained SD 1.4: 19.35; real-vs-real floor: 0.11) |
 | **Prompt faithfulness** | label macro-AUROC **0.844** with our DenseNet judge (real test images score 0.756) |
 | **Diversity** | intra-prompt MS-SSIM 0.22 (random real pairs: 0.34) |
-| **Status** | Stages 1, 2 and 4 are done. Stage 3 (synthetic twins for the Stage 5 subsets) is generating; the Stage 5 grid runs right after. |
+| **Downstream (Stage 5)** | at 1% real data, synthetic twins lift test macro-AUROC **0.594 → 0.625** (+0.031); at 10%, Mixed gives **+0.017** |
+| **Status** | All six stages are done: pipeline, evaluation, downstream grid, result tables, Gradio demo and Kaggle notebook. |
 
 ### Model comparison (256 px, n = 2000 prompts taken from real test rows, DPM++ 25 steps, guidance 4)
 
@@ -119,6 +120,32 @@ reference, not a ceiling.
 - **BiomedCLIP** (an open substitute for the paper's MIMIC-only metrics) reads CXR labels only weakly, even on real images
   (zero-shot 0.34 vs chance 0.17). Its ordering agrees with the judge (SD ≈ A < B < real ≲ C).
 
+### 6. Synthetic data helps most when real data is scarce (Stage 5, paper Ext. Data Fig. 2)
+
+DenseNet-121 classifiers were trained on Real, Synth (one C@15k twin per real row, same labels) or Mixed (both) data and tested on the
+real test split. The table gives test macro-AUROC, mean ± std over 3 seeds (`results/stage5.json`):
+
+| Real data | Real | Synth | Mixed | Synth − Real | Mixed − Real |
+|---|---|---|---|---|---|
+| 1% | 0.594 ± 0.003 | 0.625 ± 0.004 | 0.625 ± 0.011 | **+0.031** | **+0.031** |
+| 10% | 0.684 ± 0.003 | 0.684 ± 0.004 | 0.701 ± 0.004 | ±0.000 | **+0.017** |
+| 100% | 0.749 (1 seed; the judge) | – | – | – | – |
+
+<p align="center">
+  <img src="docs/img/stage5_auroc_vs_size.png" width="70%"><br>
+  <sub>Error bars: 95% CI over 3 seeds (t-interval). The 100% point is one seed (the judge).</sub>
+</p>
+
+- At 1%, a classifier trained **only on synthetic twins** beats one trained on the real images. This matches finding 3:
+  the twins carry cleaner labels than the noisy CheXpert originals. The 95% CIs are 0.594 ± 0.007 (Real) and 0.625 ± 0.011 (Synth).
+  Mixed has the same mean but more seed spread (± 0.028).
+- At 10%, Synth only ties Real, but adding the twins to the real data (Mixed) still helps (+0.017, non-overlapping CIs).
+  The gain shrinks as real data grows, as the paper reports.
+- Scope: twins were generated for the rows of the 1% and 10% subsets (44,603 images), so the 100% Synth/Mixed cells were not run.
+- Secondary test set, the official CheXpert valid split (`results/chexpert_valid.json`): VALID_SENTENCE
+- Filtering (`results/filtering_C_step15000_g4.0_dpm25.json`): no degenerate images; the judge rejects 2.1% of twins as
+  missing their positive label (miss rate 9% for Pneumonia and Enlarged Cardiomediastinum, ≤2% for the rest). The grid uses the unfiltered corpus.
+
 ---
 
 ## Pipeline and current status
@@ -128,16 +155,29 @@ reference, not a ceiling.
 | 1 | CheXpert manifest, patient-level splits (152k / 20k / 19k), label → prompt templates, VAE latent cache | ✅ |
 | 2 | Fine-tune SD 1.4: runs A, B (LoRA @512, 15k steps), C (full U-Net @256, 25k steps) | ✅ |
 | 4 | Fidelity (FID, MS-SSIM), label AUROC, BiomedCLIP retrieval, qualitative figures, guidance and checkpoint sweeps | ✅ |
-| 3 | Synthetic twin (same labels, per-row seed) of every real train row in the Stage 5 1% and 10% subsets: 44,603 images with C@15k, DPM++ 25 steps, g = 4 | 🟡 generating (`artifacts/synth/C_step15000_g4.0_dpm25`); sampler check (PNDM-75 vs DPM++-25) done, DPM++ kept |
-| 3b | `filtering.py`: drop degenerate images; judge-score rejection rate per pathology | 🟡 code done, runs on the new corpus after Stage 3 |
-| 5 | DenseNet-121 trained on Real vs Synth vs Mixed × {1%, 10%} × 3 seeds (paper Ext. Data Fig. 2); Real 100% is the judge | 🟡 queued after 3b (`artifacts/logs/queue_15k.sh`) |
-| 6 | Results aggregation and Gradio demo (prompt → synthetic CXR) | ⬜ |
+| 3 | Synthetic twin (same labels, per-row seed) of every real train row in the Stage 5 1% and 10% subsets: 44,603 images with C@15k, DPM++ 25 steps, g = 4 | ✅ (`artifacts/synth/C_step15000_g4.0_dpm25`); sampler check (PNDM-75 vs DPM++-25) done, DPM++ kept |
+| 3b | `filtering.py`: drop degenerate images; judge-score rejection rate per pathology | ✅ 97.9% kept, 0 degenerate |
+| 5 | DenseNet-121 trained on Real vs Synth vs Mixed × {1%, 10%} × 3 seeds (paper Ext. Data Fig. 2); Real 100% is the judge | ✅ see finding 6 |
+| 6 | `aggregate.py` (paper-style tables → [`results/tables.md`](results/tables.md), AUROC-vs-size figure), CheXpert-valid evaluation, Gradio demo, Kaggle notebook | ✅ |
 
-### Next steps
-1. Finish Stage 3 twins and run `filtering.py` on them (rejection rate per pathology measures how often conditioning fails).
-2. **Stage 5**: Real / Synth / Mixed grid at 1% and 10% (3 seeds each), summarised by `python -m roentgen.stage5_table`
-   into `results/stage5.json`. The low-data regime is where the paper reports synthetic data helping most.
-3. `aggregate.py` for the final tables and AUROC-vs-data-size curves; Gradio demo.
+### Limitations
+- Stage 5 covers 1% and 10% real data × 3 seeds. At 100% there is only the Real classifier, with one seed.
+- Laterality, size modifiers and multi-finding composition are not controllable (finding 4). Our prompts are templated from labels, not reports.
+- Fidelity uses one sampling seed per checkpoint. Neighbouring checkpoints differ by up to ~0.35 FID<sub>XRV</sub>.
+
+## Demo and Kaggle notebook
+
+```bash
+source env.sh && uv pip install gradio
+python app/gradio_demo.py            # http://127.0.0.1:7860   (--share for a public link, --step for another checkpoint)
+```
+Pick pathologies or type a prompt and set guidance, steps and seed. The demo shows the generated CXR next to the judge's
+per-label probabilities, and lists the findings it "calls" at the 5% FPR threshold calibrated on real images.
+It needs the run-C checkpoint (`artifacts/runs/C/ckpt-15000/trainable.safetensors`) and the judge (`artifacts/cls/real_f1.0_s0/best.pt`).
+
+[`notebooks/kaggle_reproduce.ipynb`](notebooks/kaggle_reproduce.ipynb) is a short notebook for graders. It clones the repo, builds the Stage 1
+manifest from a CheXpert Kaggle input, runs a 20-step training smoke test of run C, and samples from the released weights if they are
+attached as a Kaggle dataset. It then rebuilds the result tables.
 
 ---
 
@@ -145,10 +185,12 @@ reference, not a ceiling.
 
 ```
 src/roentgen/        all pipeline code (one module per stage; see docs/CODE_MAP.md)
-results/             every metric as JSON (fidelity_*, classify_*, clip_*, qual_*, diag_*)
+app/gradio_demo.py   Stage 6 interactive demo (prompt -> synthetic CXR + judge reading)
+notebooks/           kaggle_reproduce.ipynb (grader-runnable smoke test + sampling)
+results/             every metric as JSON (fidelity_*, classify_*, clip_*, qual_*, diag_*, stage5, chexpert_valid) + tables.md
 artifacts/figures/   comparison sheets and qualitative figures
 artifacts/runs/*/    training args + loss logs (log.jsonl) for runs A, B, C
-artifacts/cls/       judge classifier result + log
+artifacts/cls/       Stage 5 classifiers and the judge: result.json + log.jsonl per run
 artifacts/logs/      queue_*.sh: the exact command batches behind each result
 docs/                PLAN.md (design), STATUS.md (live log + full tables), CODE_MAP.md (file guide), img/
 ```
@@ -171,8 +213,12 @@ python -m roentgen.eval_fidelity --run C --step 15000 --size 256   # Stage 4a
 python -m roentgen.eval_classify --tag C_step15000                 # Stage 4b
 python -m roentgen.generate --step 15000 --limit 44603             # Stage 3 (1% + 10% subsets)
 python -m roentgen.filtering --synth artifacts/synth/C_step15000_g4.0_dpm25   # Stage 3b
+python -m roentgen.train_classifier --data mixed --frac 0.01 --seed 0 --synth artifacts/synth/C_step15000_g4.0_dpm25   # Stage 5 (one cell)
 bash artifacts/logs/queue_15k.sh                                   # or the whole Stage 3 -> 5 chain
-python -m roentgen.readme_figures                                  # charts in this README
+python -m roentgen.stage5_table                                    # Stage 5 summary -> results/stage5.json
+python -m roentgen.eval_valid                                      # Stage 5 classifiers on the official CheXpert valid set
+python -m roentgen.aggregate                                       # Stage 6 tables -> results/tables.md + docs/img/stage5_auroc_vs_size.png
+python -m roentgen.readme_figures                                  # other charts in this README
 ```
 
 Each module's docstring lists its options; [`docs/CODE_MAP.md`](docs/CODE_MAP.md) describes every file.

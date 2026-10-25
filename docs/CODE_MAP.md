@@ -33,7 +33,9 @@ the module docstrings hold the full usage and options.
 ### Stage 3 — generation
 | File | What it does |
 |---|---|
-| `generate.py` | Generates a label-matched synthetic twin for every real train row (default C@22.5k, g=4, DPM++ 25 steps; `--sampler pndm` for the paper sampler check). Per-row seeds; Stage 5's 1% / 10% subsets go first. Resumable; writes `synthetic_manifest.parquet`. |
+| `generate.py` | Generates a label-matched synthetic twin for every real train row (C@15k via `--step 15000` for the final corpus, g=4, DPM++ 25 steps; `--sampler pndm` for the paper sampler check). Per-row seeds; Stage 5's 1% / 10% subsets go first. Resumable; writes `synthetic_manifest.parquet`. |
+| `compare_samplers.py` | Sampler check: PNDM-75 (paper) vs DPM++-25 (our corpus) on the same 2,000 rows and seeds: FID vs test and vs the same rows, judge AUROC, paired MS-SSIM. → `results/sampler_check_256px.json` |
+| `filtering.py` | Stage 3b: flags degenerate twins and twins whose judge score misses their positive label (90%-recall thresholds from real val). Nothing is deleted. → `<synth>/filter.parquet`, `results/filtering_*.json` |
 
 ### Stage 4 — evaluation
 | File | What it does |
@@ -51,8 +53,14 @@ the module docstrings hold the full usage and options.
 |---|---|
 | `train_classifier.py` | DenseNet-121 on the 5 targets (paper settings). `--data real|synth|mixed` × `--frac` × `--seed` for the Stage 5 grid; `--cache` pre-decodes splits to 224 px arrays. The real 100% seed-0 model doubles as the Stage 4b **judge** (`load_judge`, `predict`). → `artifacts/cls/<run>/` |
 
-### Planned, not written yet
-`filtering.py` (Stage 3b), `aggregate.py` (tables/figures from `results/*.json`), `utils.py`, `app/gradio_demo.py` (Stage 6). See `docs/PLAN.md`.
+### Stage 5 summary and Stage 6 — reporting and demo
+| File | What it does |
+|---|---|
+| `stage5_table.py` | Collects every `artifacts/cls/<data>_f<frac>_s<seed>/result.json` into mean ± std per (data, frac) plus Synth − Real / Mixed − Real deltas. → `results/stage5.json` |
+| `eval_valid.py` | Scores every Stage 5 classifier on the official CheXpert valid set (202 frontal images, radiologist labels). Its macro covers only Pneumonia + Enlarged CM, because the other labels have ≤1 positive. → `results/chexpert_valid.json` |
+| `aggregate.py` | Builds the paper-style tables (fidelity/diversity, classification of synthetic images, downstream) from `results/*.json` and draws the AUROC-vs-training-size figure with 95% CIs. → `results/tables.md`, `docs/img/stage5_auroc_vs_size.png` |
+| `../../app/gradio_demo.py` | Gradio interface: pathology checkboxes or a free-text prompt, plus guidance / steps / seed → synthetic CXR from C@15k with the judge's per-label probabilities and 5%-FPR calls. |
+| `../../notebooks/kaggle_reproduce.ipynb` | Notebook for graders on Kaggle: Stage 1 manifest, latent-cache + 20-step training smoke test, sampling from the released weights, then `aggregate`. |
 
 ## `artifacts/logs/queue_*.sh` — job queues
 
@@ -68,3 +76,6 @@ Each one is a dated batch of commands run in the background. They record how eac
 | `queue_clip.sh` | 4c BiomedCLIP on CPU for the main sets. |
 | `queue_extend_C.sh` | Extends C training 15k → 25k, then evaluates 17.5k–25k at g=4 and g=5.5. |
 | `queue_generate.sh` | Stage 3: PNDM 2000-image check subset, then the full DPM++ corpus (re-run to resume). |
+| `queue_stage5.sh` | First Stage 5 grid on the C@22.5k corpus (superseded by `queue_15k.sh`; those results remain in git history). |
+| `queue_recover.sh` | Rebuild after the 2026-10-24 folder deletion: Stage 1 (asserting the manifest matches `manifest_meta.json`), the judge, then run C. |
+| `queue_15k.sh` | The final chain on C@15k: sanity eval, Stage 3 twins for the 1% + 10% subsets, filtering, the Stage 5 grid, `stage5_table`. |

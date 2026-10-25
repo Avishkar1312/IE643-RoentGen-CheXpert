@@ -1,0 +1,54 @@
+{
+  "args": {
+    "synth": "artifacts/synth/C_step15000_g4.0_dpm25",
+    "recall": "0.9",
+    "min_std": "10.0",
+    "max_sat": "0.5"
+  },
+  "n": 44603,
+  "thresholds_pos": {
+    "Pleural Other": 0.010685955174267292,
+    "Pneumonia": 0.05921025574207306,
+    "Lung Lesion": 0.022803284227848053,
+    "Fracture": 0.013222821988165379,
+    "Enlarged Cardiomediastinum": 0.053403329104185104
+  },
+  "thresholds_neg": {
+    "Pleural Other": 0.08035746961832047,
+    "Pneumonia": 0.24508501589298248,
+    "Lung Lesion": 0.12085322290658951,
+    "Fracture": 0.07369627058506012,
+    "Enlarged Cardiomediastinum": 0.16451646387577057
+  },
+  "degenerate": 0,
+  "label_miss": 915,
+  "kept": 43688,
+  "kept_frac": 0.9794856848194068,
+  "per_target": {
+    "Pleural Other": {
+      "positives": 993,
+      "miss_rate": 0.016112789526686808,
+      "spurious_rate_neg": 0.08759458839715661
+    },
+    "Pneumonia": {
+      "positives": 4802,
+      "miss_rate": 0.09183673469387756,
+      "spurious_rate_neg": 0.013592623300922087
+    },
+    "Lung Lesion": {
+      "positives": 1908,
+      "miss_rate": 0.020964360587002098,
+      "spurious_rate_neg": 0.055697388452980445
+    },
+    "Fracture": {
+      "positives": 1859,
+      "miss_rate": 0.010758472296933835,
+      "spurious_rate_neg": 0.18011884708965
+    },
+    "Enlarged Cardiomediastinum": {
+      "positives": 4576,
+      "miss_rate": 0.09047202797202797,
+      "spurious_rate_neg": 0.04287106203312764
+    }
+  }
+}

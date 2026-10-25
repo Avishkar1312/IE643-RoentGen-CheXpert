@@ -1,0 +1,28 @@
+{
+  "args": {
+    "cache": "False",
+    "data": "real",
+    "synth": "artifacts/synth/C_step15000_g4.0_dpm25",
+    "frac": "0.1",
+    "seed": "2",
+    "epochs": "30",
+    "patience": "5",
+    "bs": "64",
+    "lr": "0.0001",
+    "wd": "0.05",
+    "min_steps": "200",
+    "device": "cuda",
+    "val_n": "None",
+    "out": "None"
+  },
+  "n_train": 15253,
+  "best_val_macro": 0.6935093415495042,
+  "test": {
+    "Pleural Other": 0.74039745485002,
+    "Pneumonia": 0.6935262173251817,
+    "Lung Lesion": 0.7038965602700509,
+    "Fracture": 0.6979937516596354,
+    "Enlarged Cardiomediastinum": 0.5783812348406799
+  },
+  "test_macro": 0.6828390437891136
+}

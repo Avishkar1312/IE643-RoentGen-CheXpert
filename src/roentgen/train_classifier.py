@@ -112,7 +112,7 @@ def predict(model, imgs, bs=256, device="cuda"):
 
 def load_judge(path=JUDGE, device="cuda"):
     m = build_model(pretrained=False)
-    m.load_state_dict(torch.load(path, map_location="cpu"))
+    m.load_state_dict(torch.load(path, map_location="cpu", weights_only=True))
     return m.to(device).to(memory_format=torch.channels_last).eval()
 
 

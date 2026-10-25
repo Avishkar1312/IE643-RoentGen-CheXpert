@@ -1,0 +1,161 @@
+{
+  "n_images": 202,
+  "positives": {
+    "Pleural Other": 1,
+    "Pneumonia": 8,
+    "Lung Lesion": 1,
+    "Fracture": 0,
+    "Enlarged Cardiomediastinum": 105
+  },
+  "labels_in_macro": [
+    "Pneumonia",
+    "Enlarged Cardiomediastinum"
+  ],
+  "min_pos": 5,
+  "runs": {
+    "mixed_f0.01_s0": {
+      "per_label": {
+        "Pneumonia": 0.6684922680412371,
+        "Enlarged Cardiomediastinum": 0.5131075110456554
+      },
+      "macro": 0.5907998895434463
+    },
+    "mixed_f0.01_s1": {
+      "per_label": {
+        "Pneumonia": 0.8289304123711341,
+        "Enlarged Cardiomediastinum": 0.5290132547864507
+      },
+      "macro": 0.6789718335787924
+    },
+    "mixed_f0.01_s2": {
+      "per_label": {
+        "Pneumonia": 0.7644974226804124,
+        "Enlarged Cardiomediastinum": 0.5557191948944525
+      },
+      "macro": 0.6601083087874324
+    },
+    "mixed_f0.1_s0": {
+      "per_label": {
+        "Pneumonia": 0.6079252577319587,
+        "Enlarged Cardiomediastinum": 0.47707412862052045
+      },
+      "macro": 0.5424996931762396
+    },
+    "mixed_f0.1_s1": {
+      "per_label": {
+        "Pneumonia": 0.7751288659793814,
+        "Enlarged Cardiomediastinum": 0.5008345606283751
+      },
+      "macro": 0.6379817133038782
+    },
+    "mixed_f0.1_s2": {
+      "per_label": {
+        "Pneumonia": 0.8150773195876289,
+        "Enlarged Cardiomediastinum": 0.5438880706921944
+      },
+      "macro": 0.6794826951399116
+    },
+    "real_f0.1_s0": {
+      "per_label": {
+        "Pneumonia": 0.814110824742268,
+        "Enlarged Cardiomediastinum": 0.6024054982817869
+      },
+      "macro": 0.7082581615120275
+    },
+    "real_f0.1_s1": {
+      "per_label": {
+        "Pneumonia": 0.6942654639175257,
+        "Enlarged Cardiomediastinum": 0.3565046637211585
+      },
+      "macro": 0.5253850638193421
+    },
+    "real_f0.1_s2": {
+      "per_label": {
+        "Pneumonia": 0.8160438144329898,
+        "Enlarged Cardiomediastinum": 0.5187530682376043
+      },
+      "macro": 0.667398441335297
+    },
+    "real_f1.0_s0": {
+      "per_label": {
+        "Pneumonia": 0.7010309278350515,
+        "Enlarged Cardiomediastinum": 0.5547864506627393
+      },
+      "macro": 0.6279086892488954
+    },
+    "synth_f0.01_s0": {
+      "per_label": {
+        "Pneumonia": 0.8717783505154639,
+        "Enlarged Cardiomediastinum": 0.6330878743249877
+      },
+      "macro": 0.7524331124202258
+    },
+    "synth_f0.01_s1": {
+      "per_label": {
+        "Pneumonia": 0.8514819587628866,
+        "Enlarged Cardiomediastinum": 0.5113402061855671
+      },
+      "macro": 0.6814110824742268
+    },
+    "synth_f0.01_s2": {
+      "per_label": {
+        "Pneumonia": 0.8927190721649484,
+        "Enlarged Cardiomediastinum": 0.5243986254295533
+      },
+      "macro": 0.7085588487972508
+    },
+    "synth_f0.1_s0": {
+      "per_label": {
+        "Pneumonia": 0.7909149484536082,
+        "Enlarged Cardiomediastinum": 0.5274914089347079
+      },
+      "macro": 0.6592031786941581
+    },
+    "synth_f0.1_s1": {
+      "per_label": {
+        "Pneumonia": 0.805090206185567,
+        "Enlarged Cardiomediastinum": 0.5735886107020127
+      },
+      "macro": 0.6893394084437898
+    },
+    "synth_f0.1_s2": {
+      "per_label": {
+        "Pneumonia": 0.8537371134020618,
+        "Enlarged Cardiomediastinum": 0.5379970544918998
+      },
+      "macro": 0.6958670839469808
+    }
+  },
+  "cells": {
+    "mixed_f0.01": {
+      "n_seeds": 3,
+      "macro_mean": 0.6432933439698904,
+      "macro_std": 0.04642876489962267
+    },
+    "mixed_f0.1": {
+      "n_seeds": 3,
+      "macro_mean": 0.6199880338733431,
+      "macro_std": 0.0702418328443349
+    },
+    "real_f0.1": {
+      "n_seeds": 3,
+      "macro_mean": 0.6336805555555555,
+      "macro_std": 0.09598601112152426
+    },
+    "real_f1.0": {
+      "n_seeds": 1,
+      "macro_mean": 0.6279086892488954,
+      "macro_std": 0.0
+    },
+    "synth_f0.01": {
+      "n_seeds": 3,
+      "macro_mean": 0.7141343478972345,
+      "macro_std": 0.03583778490745536
+    },
+    "synth_f0.1": {
+      "n_seeds": 3,
+      "macro_mean": 0.681469890361643,
+      "macro_std": 0.019557798271556997
+    }
+  }
+}

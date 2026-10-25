@@ -14,32 +14,73 @@
       }
     },
     "synth_f0.01": {
-      "n_seeds": 2,
+      "n_seeds": 3,
       "n_train": 1525,
-      "macro_mean": 0.6246281578955692,
-      "macro_std": 0.00902152869427658,
+      "macro_mean": 0.6252429722843355,
+      "macro_std": 0.0044061912857205595,
       "per_target": {
-        "Pleural Other": 0.6592222823441368,
-        "Pneumonia": 0.6545261145498915,
-        "Lung Lesion": 0.6406358330128616,
-        "Fracture": 0.6188370605933049,
-        "Enlarged Cardiomediastinum": 0.5499194989776512
+        "Pleural Other": 0.6631498875869671,
+        "Pneumonia": 0.6528474538781235,
+        "Lung Lesion": 0.6468674386474668,
+        "Fracture": 0.6182507450393091,
+        "Enlarged Cardiomediastinum": 0.5450993362698108
       },
-      "delta_vs_real": 0.030788127029376944
+      "delta_vs_real": 0.03140294141814315
     },
     "mixed_f0.01": {
-      "n_seeds": 2,
+      "n_seeds": 3,
       "n_train": 3050,
-      "macro_mean": 0.623663158177571,
-      "macro_std": 0.007788939021205477,
+      "macro_mean": 0.6251152251947713,
+      "macro_std": 0.011393287395644025,
       "per_target": {
-        "Pleural Other": 0.6984319328581043,
-        "Pneumonia": 0.6248904085695339,
-        "Lung Lesion": 0.6272312780412768,
-        "Fracture": 0.6177118705090232,
-        "Enlarged Cardiomediastinum": 0.5500503009099167
+        "Pleural Other": 0.6896332172913948,
+        "Pneumonia": 0.6345812931986698,
+        "Lung Lesion": 0.6454506060476578,
+        "Fracture": 0.6212168021934746,
+        "Enlarged Cardiomediastinum": 0.5346942072426587
       },
-      "delta_vs_real": 0.029823127311378705
+      "delta_vs_real": 0.03127519432857895
+    },
+    "real_f0.1": {
+      "n_seeds": 3,
+      "n_train": 15253,
+      "macro_mean": 0.6841910568817458,
+      "macro_std": 0.002758133083722988,
+      "per_target": {
+        "Pleural Other": 0.7409935877154653,
+        "Pneumonia": 0.6943543759639628,
+        "Lung Lesion": 0.7109343588428834,
+        "Fracture": 0.6946645432821043,
+        "Enlarged Cardiomediastinum": 0.5800084186043128
+      }
+    },
+    "synth_f0.1": {
+      "n_seeds": 3,
+      "n_train": 15253,
+      "macro_mean": 0.6839274531471498,
+      "macro_std": 0.0036250007224298757,
+      "per_target": {
+        "Pleural Other": 0.7361247714080105,
+        "Pneumonia": 0.695471881917974,
+        "Lung Lesion": 0.7141246392912589,
+        "Fracture": 0.6850114778697733,
+        "Enlarged Cardiomediastinum": 0.5889044952487313
+      },
+      "delta_vs_real": -0.0002636037345959963
+    },
+    "mixed_f0.1": {
+      "n_seeds": 3,
+      "n_train": 30506,
+      "macro_mean": 0.7013300828713502,
+      "macro_std": 0.0037597831818086207,
+      "per_target": {
+        "Pleural Other": 0.7609741178479211,
+        "Pneumonia": 0.706630921847279,
+        "Lung Lesion": 0.7268650457918501,
+        "Fracture": 0.7085986140983361,
+        "Enlarged Cardiomediastinum": 0.6035817147713644
+      },
+      "delta_vs_real": 0.017139025989604484
     },
     "real_f1.0": {
       "n_seeds": 1,
@@ -56,17 +97,6 @@
     }
   },
   "missing": [
-    "synth_f0.01_s2",
-    "mixed_f0.01_s2",
-    "real_f0.1_s0",
-    "real_f0.1_s1",
-    "real_f0.1_s2",
-    "synth_f0.1_s0",
-    "synth_f0.1_s1",
-    "synth_f0.1_s2",
-    "mixed_f0.1_s0",
-    "mixed_f0.1_s1",
-    "mixed_f0.1_s2",
     "real_f1.0_s1",
     "real_f1.0_s2",
     "synth_f1.0_s0",
