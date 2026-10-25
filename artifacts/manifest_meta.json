@@ -2,7 +2,7 @@
   "uncertain_policy": "positive",
   "seed": 643,
   "combo_cap": 8000,
-  "chexpert_dir": "/home/sedrica/Desktop/IE643/data",
+  "chexpert_dir": "/home/sedrica/Desktop/IE643/IE643-RoentGen-CheXpert/data",
   "raw_all_views_positives": {
     "Pleural Other": 6176,
     "Pneumonia": 24809,

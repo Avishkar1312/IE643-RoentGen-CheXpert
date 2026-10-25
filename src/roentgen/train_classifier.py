@@ -54,6 +54,7 @@ def build_cache():
         if out.exists():
             print("exists", out)
             continue
+        out.parent.mkdir(parents=True, exist_ok=True)
         df = read_manifest(split)
         t = time.time()
         with Pool(24) as pool:

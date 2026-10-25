@@ -1,6 +1,8 @@
 {
   "args": {
     "cache": "False",
+    "data": "real",
+    "synth": "/home/sedrica/Desktop/IE643/IE643-RoentGen-CheXpert/artifacts/synth/C_step22500_g4.0_dpm25",
     "frac": "1.0",
     "seed": "0",
     "epochs": "30",

@@ -25,11 +25,11 @@ images help a downstream classifier.
 
 | | |
 |---|---|
-| **Primary model** | Run **C**: full U-Net fine-tune at 256 px, checkpoint **22.5k**, guidance **4.0** |
-| **Fidelity** | FID<sub>XRV</sub> **0.59** (untrained SD 1.4: 19.35; real-vs-real floor: 0.11) |
-| **Prompt faithfulness** | label macro-AUROC **0.875** with our DenseNet judge (real test images score 0.756) |
-| **Diversity** | intra-prompt MS-SSIM 0.23 (random real pairs: 0.34) |
-| **Status** | Stages 1, 2 and 4 are done. Stage 3 (synthetic corpus) is about 18% generated. Stage 5 is next. |
+| **Primary model** | Run **C**: full U-Net fine-tune at 256 px, checkpoint **15k**, guidance **4.0** |
+| **Fidelity** | FID<sub>XRV</sub> **0.67** (untrained SD 1.4: 19.35; real-vs-real floor: 0.11) |
+| **Prompt faithfulness** | label macro-AUROC **0.844** with our DenseNet judge (real test images score 0.756) |
+| **Diversity** | intra-prompt MS-SSIM 0.22 (random real pairs: 0.34) |
+| **Status** | Stages 1, 2 and 4 are done. Stage 3 (synthetic twins for the Stage 5 subsets) is generating; the Stage 5 grid runs right after. |
 
 ### Model comparison (256 px, n = 2000 prompts taken from real test rows, DPM++ 25 steps, guidance 4)
 
@@ -39,10 +39,12 @@ images help a downstream classifier.
 | SD 1.4, no fine-tuning | 19.35 | 193.1 | 0.088 | 0.514 |
 | A: LoRA U-Net + LoRA CLIP @512, 15k | 3.16 | 46.3 | 0.128 | 0.661 |
 | B: LoRA U-Net @512, 15k | 3.90 | 41.5 | 0.139 | 0.652 |
-| C: full U-Net @256, 15k | 0.69 | 31.2 | 0.220 | 0.847 |
-| **C: full U-Net @256, 22.5k** | **0.59** | **30.9** | 0.232 | **0.875** |
+| **C: full U-Net @256, 15k (primary)** | **0.67** | 33.0 | 0.221 | **0.844** |
+| C: full U-Net @256, 22.5k | 0.59 | 30.9 | 0.232 | 0.875 |
 
 Every number comes from a JSON file in [`results/`](results/) (`fidelity_*`, `classify_*`, `clip_*`).
+The C@15k row is a fresh retrain of run C with the same seed and hyperparameters. The first C@15k run scored
+0.69 / 31.2 / 0.220 / 0.847, so training reproduces to within sampling noise.
 The full tables, including every sweep, are in [`docs/STATUS.md`](docs/STATUS.md).
 
 ---
@@ -61,7 +63,7 @@ A and B learn the look of a chest X-ray (FID drops from 19 to about 3), but the 
 The text-encoder LoRA in A did train (its weights moved), so this is not a loading bug. Even at guidance 7.5, A and B
 stay below C at guidance 2 on label AUROC. **C is the primary run.**
 
-### 2. Guidance trades fidelity for label strength; 22.5k is the best checkpoint
+### 2. Guidance trades fidelity for label strength; checkpoints past 12.5k are within noise
 
 <p align="center">
   <img src="docs/img/guidance_tradeoff.png" width="70%">
@@ -74,9 +76,10 @@ We use **g = 4** for the best fidelity. g = 5.5 is an option if Stage 5 needs st
   <img src="docs/img/checkpoint_sweep.png" width="100%">
 </p>
 
-C was extended from 15k to 25k steps. At **22.5k** both FIDs are at their lowest and AUROC is at its peak; at 25k it regresses.
-FID<sub>XRV</sub> moves by up to about 0.35 between neighbouring checkpoints (single sampling seed). 22.5k is the only checkpoint
-that is best on both FIDs and on AUROC at once.
+C was extended from 15k to 25k steps. 22.5k scores slightly better than 15k (FID<sub>XRV</sub> 0.59 vs 0.69, AUROC 0.875 vs 0.847)
+and 25k regresses. But FID<sub>XRV</sub> moves by up to about 0.35 between neighbouring checkpoints (single sampling seed), so 15k and 22.5k
+are within noise of each other. We use **C@15k**: it is the checkpoint behind every Stage 4 analysis (guidance sweep, BiomedCLIP,
+qualitative probes and the real-vs-synthetic diagnosis), so Stages 3–5 use the same model that was characterised.
 
 <details>
 <summary>Training loss curves</summary>
@@ -125,18 +128,16 @@ reference, not a ceiling.
 | 1 | CheXpert manifest, patient-level splits (152k / 20k / 19k), label → prompt templates, VAE latent cache | ✅ |
 | 2 | Fine-tune SD 1.4: runs A, B (LoRA @512, 15k steps), C (full U-Net @256, 25k steps) | ✅ |
 | 4 | Fidelity (FID, MS-SSIM), label AUROC, BiomedCLIP retrieval, qualitative figures, guidance and checkpoint sweeps | ✅ |
-| 3 | Synthetic twin of every real train row (152,539 images, same labels, per-row seed) with C@22.5k | 🟡 27,944 / 152,539 (the job stopped and needs resuming); 2k PNDM-75 sampler-check set done |
-| 3b | `filtering.py`: drop degenerate images; judge-score rejection rate per pathology | ⬜ |
-| 5 | DenseNet-121 trained on Real vs Synth vs Mixed × {1%, 10%, 100%} × 3 seeds (paper Ext. Data Fig. 2). Code is ready (`--data real\|synth\|mixed`) | ⬜ |
+| 3 | Synthetic twin (same labels, per-row seed) of every real train row in the Stage 5 1% and 10% subsets: 44,603 images with C@15k, DPM++ 25 steps, g = 4 | 🟡 generating (`artifacts/synth/C_step15000_g4.0_dpm25`); sampler check (PNDM-75 vs DPM++-25) done, DPM++ kept |
+| 3b | `filtering.py`: drop degenerate images; judge-score rejection rate per pathology | 🟡 code done, runs on the new corpus after Stage 3 |
+| 5 | DenseNet-121 trained on Real vs Synth vs Mixed × {1%, 10%} × 3 seeds (paper Ext. Data Fig. 2); Real 100% is the judge | 🟡 queued after 3b (`artifacts/logs/queue_15k.sh`) |
 | 6 | Results aggregation and Gradio demo (prompt → synthetic CXR) | ⬜ |
 
 ### Next steps
-1. **Resume Stage 3 generation** (`artifacts/logs/queue_generate.sh`, about 10.5 h left). Images are generated in priority order,
-   so the subsets for the 1% and 10% Stage 5 experiments are already covered or come next.
-2. Compare FID of PNDM-75 vs DPM++-25 on the paired 2k set (same prompts and seeds) to check the sampler choice.
-3. Write `filtering.py` and report the rejection rate per pathology (it measures how often conditioning fails).
-4. **Stage 5**: run the Real / Synth / Mixed grid at 1%, 10% and 100% to answer the research question.
-5. `aggregate.py` for the final tables and AUROC-vs-data-size curves; Gradio demo.
+1. Finish Stage 3 twins and run `filtering.py` on them (rejection rate per pathology measures how often conditioning fails).
+2. **Stage 5**: Real / Synth / Mixed grid at 1% and 10% (3 seeds each), summarised by `python -m roentgen.stage5_table`
+   into `results/stage5.json`. The low-data regime is where the paper reports synthetic data helping most.
+3. `aggregate.py` for the final tables and AUROC-vs-data-size curves; Gradio demo.
 
 ---
 
@@ -159,16 +160,18 @@ model checkpoints (~50 GB) and generated image sets.
 
 ```bash
 uv venv --python 3.10 .venv && source env.sh
-uv pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu124
+uv pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu124 --index-strategy unsafe-best-match
 # put CheXpert-v1.0-small under data/
 
 python -m roentgen.chexpert --build                 # Stage 1: manifest + splits
 python -m roentgen.cache_latents --size 256         # Stage 1b: latent cache
-python -m roentgen.train_lora --run C --steps 25000 # Stage 2
+python -m roentgen.train_lora --run C --steps 15000 # Stage 2
 python -m roentgen.train_classifier --cache && python -m roentgen.train_classifier --frac 1.0 --seed 0   # judge
-python -m roentgen.eval_fidelity --run C --step 22500 --size 256   # Stage 4a
-python -m roentgen.eval_classify --tag C_step22500                 # Stage 4b
-python -m roentgen.generate                                        # Stage 3
+python -m roentgen.eval_fidelity --run C --step 15000 --size 256   # Stage 4a
+python -m roentgen.eval_classify --tag C_step15000                 # Stage 4b
+python -m roentgen.generate --step 15000 --limit 44603             # Stage 3 (1% + 10% subsets)
+python -m roentgen.filtering --synth artifacts/synth/C_step15000_g4.0_dpm25   # Stage 3b
+bash artifacts/logs/queue_15k.sh                                   # or the whole Stage 3 -> 5 chain
 python -m roentgen.readme_figures                                  # charts in this README
 ```
 

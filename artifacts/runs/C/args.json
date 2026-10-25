@@ -1,6 +1,6 @@
 {
   "run": "C",
-  "steps": 25000,
+  "steps": 22500,
   "bs": 4,
   "accum": 8,
   "lr": 5e-05,
@@ -10,8 +10,8 @@
   "sample_every": 1000,
   "log_every": 10,
   "keep": 2,
-  "milestone_every": 2500,
-  "resume_from": "artifacts/runs/C/ckpt-15000",
+  "milestone_every": 7500,
+  "resume_from": null,
   "out": null,
   "seed": 643,
   "no_sample": false,

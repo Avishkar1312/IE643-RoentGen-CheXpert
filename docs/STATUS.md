@@ -1,8 +1,22 @@
-# Status — 2026-10-09
+# Status — 2026-10-25
+
+## Rebuild and final pipeline (2026-10-24 → 25)
+The project folder was deleted on 2026-10-24; everything gitignored was lost (data, venv, caches, run C ckpts,
+judge, the 152k-image twin corpus, Stage 5 checkpoints). Code and all results/*.json survived in git.
+Rebuilt by `artifacts/logs/queue_recover.sh` (Stage 1, asserting the manifest matches manifest_meta.json; judge; run C)
+and then `artifacts/logs/queue_15k.sh` (log artifacts/logs/q15k.log):
+- **Primary model is now C @ 15k, g=4.** 15k and 22.5k are within checkpoint noise (FID_XRV ±0.35 between neighbours), and
+  15k is the checkpoint every Stage 4 analysis (guidance sweep, CLIP, qualitative, diagnosis) was run on.
+- Retrained C@15k reproduces the original: FID_XRV 0.665 (was 0.687), FID_Inc 33.0 (31.2), MS-SSIM 0.221 (0.220),
+  own-judge AUROC 0.844 (0.847). results/{fidelity,classify}_C_step15000_256px.json now hold the retrain; originals: `git show 7140a95:<path>`.
+- Stage 3: DPM++-25 twins for the union of the Stage 5 1% + 10% subsets (first 44,603 rows in priority order)
+  -> artifacts/synth/C_step15000_g4.0_dpm25, then filtering.py.
+- Stage 5: grid at 1% and 10% × seeds 0–2 × real/synth/mixed; 100% has the real judge (real_f1.0_s0). Then stage5_table.
+- Old C@22.5k-corpus results below (sampler check, filtering) stay as history; Stage 5 numbers come from the 15k corpus only.
 
 ## Done
 - Stage 1 (manifest, splits, caches) and Stage 2 (runs A, B to 15k steps; C to 25k).
-- **Primary for Stage 3: C @ 22.5k, guidance 4.0** (decided 2026-10-09; see extension table below).
+- ~~Primary for Stage 3: C @ 22.5k, guidance 4.0~~ (decided 2026-10-09; replaced by C @ 15k on 2026-10-25, see above).
 - Fidelity @256px, n=2000: real-vs-real FID_XRV 0.11 / Inception 11.1; C@15k 0.69 / 31.2, MS-SSIM 0.22.
 - Classifier image cache: artifacts/cache/cls224_{train,val,test}.npy.
 
@@ -164,6 +178,6 @@ features are on a real-image manifold.
 - [x] train_classifier --data real|synth|mixed (2026-10-14): same seeded --frac draw; synth = twins of those rows,
       mixed = rows + twins; out dir artifacts/cls/<data>_f<frac>_s<seed>. Smoke-tested mixed 1% end-to-end.
 
-## Stage 5: real / synth / mixed classifiers (artifacts/logs/queue_stage5.sh -> stage5.log)
-- [ ] Grid 3 data x {1%, 10%, 100%} x seeds 0-2, relaunched 2026-10-23 19:20 (first launch deadlocked on an unanchored pgrep)
+## Stage 5: real / synth / mixed classifiers (artifacts/logs/queue_15k.sh -> q15k.log)
+- [ ] Grid 3 data x {1%, 10%} x seeds 0-2 on the C@15k twins (queued after Stage 3 + filtering)
 - [ ] Table: `python -m roentgen.stage5_table` -> results/stage5.json (test macro AUROC, mean ± std over seeds)
